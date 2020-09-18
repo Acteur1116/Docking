@@ -8,7 +8,7 @@ import com.renard.rhsdk.user.UserExtraData;
  *
  * @author suyanan
  */
-public interface UserPlugin {
+public interface UserPlugin extends Plugin{
     int PLUGIN_TYPE = Constants.PLUGIN_TYPE_USER;
 
     /***

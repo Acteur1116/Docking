@@ -10,14 +10,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.multidex.MultiDex;
 import android.text.TextUtils;
 
+import com.renard.rhsdk.analytics.RHSubmit;
 import com.renard.rhsdk.insterface.ActivityCallback;
 import com.renard.rhsdk.insterface.RHSDKListener;
 import com.renard.rhsdk.log.Log;
+import com.renard.rhsdk.plugin.KSUser;
 import com.renard.rhsdk.plugin.PluginFactory;
+import com.renard.rhsdk.user.RHSDKFlag;
+import com.renard.rhsdk.util.EncryptUtils;
+import com.renard.rhsdk.util.HttpUtils;
 import com.renard.rhsdk.verify.RHToken;
+import com.renard.rhsdk.verify.RHVerify;
 
 import org.json.JSONObject;
 
@@ -293,10 +298,10 @@ public class RHSDKManager {
     public void onAppAttachBaseContext(Application application, Context context){
         this.application = application;
 
-        MultiDex.install(application);
+//        MultiDex.install(application);
         Log.init(context);
 
-        applicationListeners.clear();
+//        applicationListeners.clear();
 
         PluginFactory.getInstance().loadPluginInfo(context);
         developInfo = PluginFactory.getInstance().getSDKParams(context);
@@ -310,27 +315,27 @@ public class RHSDKManager {
             for(String proxy : proxyApps){
                 if(!TextUtils.isEmpty(proxy)){
                     Log.d("RHSDK", "add a new application listener:"+proxy);
-                    IApplicationListener listener = newApplicationInstance(application, proxy);
-                    if(listener != null){
-                        applicationListeners.add(listener);
-                    }
+//                    IApplicationListener listener = newApplicationInstance(application, proxy);
+//                    if(listener != null){
+//                        applicationListeners.add(listener);
+//                    }
                 }
             }
         }
 
         if(metaData.containsKey(APP_GAME_NAME)){
             String gameAppName = metaData.getString(APP_GAME_NAME);
-            IApplicationListener listener = newApplicationInstance(application, gameAppName);
-            if(listener != null){
-                Log.e("RHSDK", "add a game application listener:"+gameAppName);
-                applicationListeners.add(listener);
-            }
+//            IApplicationListener listener = newApplicationInstance(application, gameAppName);
+//            if(listener != null){
+//                Log.e("RHSDK", "add a game application listener:"+gameAppName);
+//                applicationListeners.add(listener);
+//            }
 
         }
 
-        for(IApplicationListener lis : applicationListeners){
-            lis.onProxyAttachBaseContext(context);
-        }
+//        for(IApplicationListener lis : applicationListeners){
+//            lis.onProxyAttachBaseContext(context);
+//        }
     }
 
     /**
@@ -339,45 +344,45 @@ public class RHSDKManager {
      * @param newConfig
      */
     public void onAppConfigurationChanged(Application application, Configuration newConfig){
-        for(IApplicationListener lis : applicationListeners){
-            lis.onProxyConfigurationChanged(newConfig);
-        }
+//        for(IApplicationListener lis : applicationListeners){
+//            lis.onProxyConfigurationChanged(newConfig);
+//        }
     }
 
     public void onTerminate(){
-        for(IApplicationListener lis : applicationListeners){
-            lis.onProxyTerminate();
-        }
+//        for(IApplicationListener lis : applicationListeners){
+//            lis.onProxyTerminate();
+//        }
         Log.destory();
     }
 
     @SuppressWarnings("rawtypes")
-    private IApplicationListener newApplicationInstance(Application application, String proxyAppName){
-
-        if(proxyAppName == null || SDKTools.isNullOrEmpty(proxyAppName)){
-            return null;
-        }
-
-        if(proxyAppName.startsWith(".")){
-            proxyAppName = DEFAULT_PKG_NAME + proxyAppName;
-        }
-
-        try {
-            Class clazz = Class.forName(proxyAppName);
-            return (IApplicationListener)clazz.newInstance();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-
-        return null;
-    }
+//    private IApplicationListener newApplicationInstance(Application application, String proxyAppName){
+//
+//        if(proxyAppName == null || SDKTools.isNullOrEmpty(proxyAppName)){
+//            return null;
+//        }
+//
+//        if(proxyAppName.startsWith(".")){
+//            proxyAppName = DEFAULT_PKG_NAME + proxyAppName;
+//        }
+//
+//        try {
+//            Class clazz = Class.forName(proxyAppName);
+//            return (IApplicationListener)clazz.newInstance();
+//
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        return null;
+//    }
 
     /***
      * 游戏调用抽象层的时候，需要在Activity的onCreate方法中调用该方法
@@ -387,16 +392,16 @@ public class RHSDKManager {
         this.context = context;
         try{
             if(isUseSDKAnalytics()){
-                SDAgent.getInstance().init(context);
+                RHSubmit.getInstance().init(context);
             }
 
-            SSY185Push.getInstance().init();
-            SSY185User.getInstance().init();
-            SSY185Pay.getInstance().init();
-            SSY185Share.getInstance().init();
-            SSY185Analytics.getInstance().init();
-            SSY185Download.getInstance().init();
-            SSY185Gear.getInstance().init();
+//            SSY185Push.getInstance().init();
+            KSUser.getInstance().init();
+//            SSY185Pay.getInstance().init();
+//            SSY185Share.getInstance().init();
+//            SSY185Analytics.getInstance().init();
+//            SSY185Download.getInstance().init();
+//            SSY185Gear.getInstance().init();
 
         }catch(Exception e){
             e.printStackTrace();
@@ -439,7 +444,7 @@ public class RHSDKManager {
                 if(state == 1){
                     int sdkFlag = jsonObj.getInt("sdkFlag");
                     this.developInfo.put("SdkFlag", sdkFlag+"");
-                    if(sdkFlag == SDKFlag.SWITCH){
+                    if(sdkFlag == RHSDKFlag.SWITCH){
                         this.developInfo.put("RH_ChannelID", jsonObj.getString("RH_ChannelID"));
                         this.developInfo.put("AppID", jsonObj.getString("AppID"));
                         this.developInfo.put("ClientKey", jsonObj.getString("ClientKey"));
@@ -448,14 +453,14 @@ public class RHSDKManager {
                         this.developInfo.put("msg", jsonObj.has("msg")?jsonObj.getString("msg"):"");
                     }
                 }else{
-                    this.developInfo.put("SdkFlag", SDKFlag.OPEN+"");
+                    this.developInfo.put("SdkFlag", RHSDKFlag.OPEN+"");
                 }
             }else{
-                this.developInfo.put("SdkFlag", SDKFlag.OPEN+"");
+                this.developInfo.put("SdkFlag", RHSDKFlag.OPEN+"");
             }
 
         }catch(Exception e){
-            this.developInfo.put("SdkFlag", SDKFlag.OPEN+"");
+            this.developInfo.put("SdkFlag", RHSDKFlag.OPEN+"");
             e.printStackTrace();
             Log.e("RHSDK", "init failed.\n"+e.getMessage());
         }
@@ -465,7 +470,7 @@ public class RHSDKManager {
 
     public int getSdkFlag(){
         if(this.developInfo == null){
-            return SDKFlag.OPEN;
+            return RHSDKFlag.OPEN;
         }
 
         //由于初始化异步请求服务器，这里等待服务器返回
@@ -473,7 +478,7 @@ public class RHSDKManager {
         while(!this.developInfo.contains("SdkFlag")){
             i += 100;
             if(i > 5000){//5秒超时
-                return SDKFlag.OPEN;
+                return RHSDKFlag.OPEN;
             }
             try {
                 Thread.sleep(100);
@@ -702,7 +707,7 @@ public class RHSDKManager {
         }
     }
 
-    class AuthTask extends AsyncTask<String, Void, SToken>{
+    class AuthTask extends AsyncTask<String, Void, RHToken>{
 
 
         @Override
@@ -710,12 +715,12 @@ public class RHSDKManager {
 
             String result = args[0];
             Log.d("RHSDK", "begin to auth...");
-            RHToken token = SSY185Proxy.auth(result);
+            RHToken token = RHVerify.auth(result);
 
             return token;
         }
 
-        protected void onPostExecute(SToken token){
+        protected void onPostExecute(RHToken token){
 
             onAuthResult(token);
         }

@@ -1,6 +1,6 @@
 package com.renard.rhsdk.log;
 
-import com.ssy185.sdk.utils.HttpUtils;
+import com.renard.rhsdk.util.HttpUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

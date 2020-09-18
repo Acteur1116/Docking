@@ -24,7 +24,7 @@ public class MobileManager {
     private MobileManager() {
     }
 
-    public static MobileManager getinstance(){
+    public static MobileManager getInstance(){
         if (instance==null){
             instance=new MobileManager();
         }

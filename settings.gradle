@@ -1,2 +1,3 @@
 rootProject.name='Docking'
 include ':rhsdk'
+include ':app'

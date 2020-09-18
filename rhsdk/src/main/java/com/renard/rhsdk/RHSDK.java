@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.renard.rhsdk.insterface.RHSDKListener;
 import com.renard.rhsdk.log.Log;
+import com.renard.rhsdk.plugin.KSUser;
 import com.renard.rhsdk.sdk.RHSDKInitListener;
 import com.renard.rhsdk.sdk.RHSDKManager;
 import com.renard.rhsdk.sdk.RHSDKCode;
@@ -16,6 +17,8 @@ import com.renard.rhsdk.verify.RHToken;
  */
 public class RHSDK {
     public static RHSDK instance;
+
+    private boolean isSwitchAccount = false;
 
     public RHSDK() {
     }
@@ -159,5 +162,19 @@ public class RHSDK {
             Log.e("RHSDK", "init failed.", e);
             e.printStackTrace();
         }
+    }
+    /**
+     * 登录，登录成功或者失败，会触发初始化回调中的onLoginResult
+     * @param context
+     */
+    public void login(Activity context){
+        RHSDKManager.getInstance().setContext(context);
+        RHSDKManager.getInstance().runOnMainThread(new Runnable() {
+
+            @Override
+            public void run() {
+                KSUser.getInstance().login();
+            }
+        });
     }
 }

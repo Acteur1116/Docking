@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: __local_aars__:./rhsdk/libs/android-support-multidex.jar:unspecified@jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/rhsdk/libs/android-support-multidex.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
