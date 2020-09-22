@@ -7,7 +7,7 @@ import com.renard.rhsdk.pay.PayParams;
  *
  * @author suyanan
  */
-public interface PayPlugin {
+public interface PayPlugin extends Plugin{
     public static final int PLUGIN_TYPE = Constants.PLUGIN_TYPE_PAY;
 
     /***

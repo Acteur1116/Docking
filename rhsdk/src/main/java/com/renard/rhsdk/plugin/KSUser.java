@@ -3,7 +3,7 @@ package com.renard.rhsdk.plugin;
 import com.renard.rhsdk.analytics.RHSubmit;
 import com.renard.rhsdk.imple.SimpleDefaultUser;
 import com.renard.rhsdk.sdk.RHSDKManager;
-import com.renard.rhsdk.user.CloseUser;
+import com.renard.rhsdk.imple.CloseUser;
 import com.renard.rhsdk.user.RHSDKFlag;
 import com.renard.rhsdk.user.UserExtraData;
 

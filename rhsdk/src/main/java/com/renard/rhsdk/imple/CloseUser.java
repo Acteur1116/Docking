@@ -1,4 +1,4 @@
-package com.renard.rhsdk.user;
+package com.renard.rhsdk.imple;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -6,6 +6,7 @@ import android.widget.Toast;
 import com.renard.rhsdk.plugin.UserPlugin;
 import com.renard.rhsdk.sdk.RHSDKCode;
 import com.renard.rhsdk.sdk.RHSDKManager;
+import com.renard.rhsdk.user.UserExtraData;
 
 /**
  * Created by Riven_rabbit on 2020/9/17

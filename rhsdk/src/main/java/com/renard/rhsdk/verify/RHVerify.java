@@ -6,6 +6,9 @@ import android.text.TextUtils;
 import com.renard.rhsdk.analytics.MobileDevice;
 import com.renard.rhsdk.log.Log;
 import com.renard.rhsdk.pay.PayParams;
+import com.renard.rhsdk.pay.RHOrder;
+import com.renard.rhsdk.plugin.KSPay;
+import com.renard.rhsdk.plugin.PayPlugin;
 import com.renard.rhsdk.sdk.RHSDKManager;
 import com.renard.rhsdk.util.EncryptUtils;
 import com.renard.rhsdk.util.HttpUtils;
@@ -72,54 +75,54 @@ public class RHVerify {
      * @param result
      * @return
      */
-//    public static SOrder getOrder(PayParams data){
-//
-//        try{
-//
-//            SToken tokenInfo = RHSDKManager.getInstance().getUToken();
-//            if(tokenInfo == null){
-//                Log.e("SuperSYSDK", "The user not logined. the token is null");
-//                return null;
-//            }
-//
-//            String packageName = SSY185Pay.getInstance().isSupportSw("sw")?RHSDKManager.getInstance().getApplication().getPackageName():"";
-//            Log.d("SuperSYSDK", "sw: "+SSY185Pay.getInstance().isSupportSw("sw")+" PackageName: "+packageName);
-//
-//            Map<String, String> params = new HashMap<String, String>();
-//            params.put("userID", ""+tokenInfo.getUserID());
-//            params.put("productID", data.getProductId());
-//            params.put("productName", data.getProductName());
-//            params.put("productDesc", data.getProductDesc());
-//            params.put("money", ""+Math.round(data.getPrice()*100));
-//            params.put("origMoney", ""+Math.round(data.getOrigPrice()*100));
-//            params.put("roleID", ""+data.getRoleId());
-//            params.put("roleName", data.getRoleName());
-//            params.put("roleLevel", data.getRoleLevel()+"");
-//            params.put("serverID", data.getServerId());
-//            params.put("serverName", data.getServerName());
-//            params.put("extension", data.getExtension());
-//            params.put("notifyUrl", data.getPayNotifyUrl());
-//            params.put("appID", RHSDKManager.getInstance().getAppID()+"");
-//            params.put("channelID", RHSDKManager.getInstance().getCurrChannel()+"");
-//            params.put("packageName", packageName);
-//
-//            params.put("signType", "md5");
-//            String sign = generateSign(tokenInfo, data, packageName);
-//            params.put("sign", sign);
-//
-//            String orderResult = HttpUtils.httpPost(RHSDKManager.getInstance().getOrderURL(), params);
-//
-//            Log.d("SuperSYSDK", "The order result is "+orderResult);
-//
-//            return parseOrderResult(orderResult);
-//
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//
-//    }
+    public static RHOrder getOrder(PayParams data){
+
+        try{
+
+            RHToken tokenInfo = RHSDKManager.getInstance().getUToken();
+            if(tokenInfo == null){
+                Log.e("SuperSYSDK", "The user not logined. the token is null");
+                return null;
+            }
+
+            String packageName = KSPay.getInstance().isSupportSw("sw")?RHSDKManager.getInstance().getApplication().getPackageName():"";
+            Log.d("SuperSYSDK", "sw: "+KSPay.getInstance().isSupportSw("sw")+" PackageName: "+packageName);
+
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("userID", ""+tokenInfo.getUserID());
+            params.put("productID", data.getProductId());
+            params.put("productName", data.getProductName());
+            params.put("productDesc", data.getProductDesc());
+            params.put("money", ""+Math.round(data.getPrice()*100));
+            params.put("origMoney", ""+Math.round(data.getOrigPrice()*100));
+            params.put("roleID", ""+data.getRoleId());
+            params.put("roleName", data.getRoleName());
+            params.put("roleLevel", data.getRoleLevel()+"");
+            params.put("serverID", data.getServerId());
+            params.put("serverName", data.getServerName());
+            params.put("extension", data.getExtension());
+            params.put("notifyUrl", data.getPayNotifyUrl());
+            params.put("appID", RHSDKManager.getInstance().getAppID()+"");
+            params.put("channelID", RHSDKManager.getInstance().getCurrChannel()+"");
+            params.put("packageName", packageName);
+
+            params.put("signType", "md5");
+            String sign = generateSign(tokenInfo, data, packageName);
+            params.put("sign", sign);
+
+            String orderResult = HttpUtils.httpPost(RHSDKManager.getInstance().getOrderURL(), params);
+
+            Log.d("SuperSYSDK", "The order result is "+orderResult);
+
+            return parseOrderResult(orderResult);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return null;
+
+    }
 
     private static String generateSign(RHToken token, PayParams data, String packageName) throws UnsupportedEncodingException {
 
@@ -200,35 +203,35 @@ public class RHVerify {
         return new RHToken();
     }
 
-//    private static SOrder parseOrderResult(String orderResult){
-//
-//        try {
-//            JSONObject jsonObj = new JSONObject(orderResult);
-//            int state = jsonObj.getInt("state");
-//
-//            if(state != 1){
-//                Log.d("SuperSYSDK", "get order failed. the state is "+ state);
-//                return null;
-//            }
-//
-//            JSONObject jsonData = jsonObj.getJSONObject("data");
-//            SOrder sorder = new SOrder(jsonData.getString("orderID"), jsonData.getString("extension"));
-//            if(jsonData.has("sw")){
-//                sorder.setSw(jsonData.getInt("sw"));
-//            }
-//            if(jsonData.has("url")){
-//                sorder.setUrl(jsonData.getString("url"));
-//            }
-//            if(jsonData.has("key")){
-//                sorder.setKey(jsonData.getString("key"));
-//            }
-//
-//            return sorder;
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
+    private static RHOrder parseOrderResult(String orderResult){
+
+        try {
+            JSONObject jsonObj = new JSONObject(orderResult);
+            int state = jsonObj.getInt("state");
+
+            if(state != 1){
+                Log.d("SuperSYSDK", "get order failed. the state is "+ state);
+                return null;
+            }
+
+            JSONObject jsonData = jsonObj.getJSONObject("data");
+            RHOrder rhOrder = new RHOrder(jsonData.getString("orderID"), jsonData.getString("extension"));
+            if(jsonData.has("sw")){
+                rhOrder.setSw(jsonData.getInt("sw"));
+            }
+            if(jsonData.has("url")){
+                rhOrder.setUrl(jsonData.getString("url"));
+            }
+            if(jsonData.has("key")){
+                rhOrder.setKey(jsonData.getString("key"));
+            }
+
+            return rhOrder;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }
