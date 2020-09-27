@@ -3,12 +3,10 @@ package com.renard.rhsdk.verify;
 import android.annotation.SuppressLint;
 import android.text.TextUtils;
 
-import com.renard.rhsdk.analytics.MobileDevice;
 import com.renard.rhsdk.log.Log;
 import com.renard.rhsdk.pay.PayParams;
 import com.renard.rhsdk.pay.RHOrder;
-import com.renard.rhsdk.plugin.KSPay;
-import com.renard.rhsdk.plugin.PayPlugin;
+import com.renard.rhsdk.plugin.RHPay;
 import com.renard.rhsdk.sdk.RHSDKManager;
 import com.renard.rhsdk.util.EncryptUtils;
 import com.renard.rhsdk.util.HttpUtils;
@@ -56,12 +54,12 @@ public class RHVerify {
 
             String authResult = HttpUtils.httpGet(RHSDKManager.getInstance().getAuthURL(), params);
 
-            Log.d("SuperSYSDK", "The sign is " + sign + " The auth result is "+authResult);
+            Log.d("RHSDK", "The sign is " + sign + " The auth result is "+authResult);
 
             return parseAuthResult(authResult);
 
         }catch(Exception e){
-            Log.e("SuperSYSDK", "ssysdkserver auth exception.", e);
+            Log.e("RHSDK", "ssysdkserver auth exception.", e);
             e.printStackTrace();
         }
 
@@ -81,12 +79,12 @@ public class RHVerify {
 
             RHToken tokenInfo = RHSDKManager.getInstance().getUToken();
             if(tokenInfo == null){
-                Log.e("SuperSYSDK", "The user not logined. the token is null");
+                Log.e("RHSDK", "The user not logined. the token is null");
                 return null;
             }
 
-            String packageName = KSPay.getInstance().isSupportSw("sw")?RHSDKManager.getInstance().getApplication().getPackageName():"";
-            Log.d("SuperSYSDK", "sw: "+KSPay.getInstance().isSupportSw("sw")+" PackageName: "+packageName);
+            String packageName = RHPay.getInstance().isSupportSw("sw")?RHSDKManager.getInstance().getApplication().getPackageName():"";
+            Log.d("RHSDK", "sw: "+ RHPay.getInstance().isSupportSw("sw")+" PackageName: "+packageName);
 
             Map<String, String> params = new HashMap<String, String>();
             params.put("userID", ""+tokenInfo.getUserID());
@@ -112,7 +110,7 @@ public class RHVerify {
 
             String orderResult = HttpUtils.httpPost(RHSDKManager.getInstance().getOrderURL(), params);
 
-            Log.d("SuperSYSDK", "The order result is "+orderResult);
+            Log.d("RHSDK", "The order result is "+orderResult);
 
             return parseOrderResult(orderResult);
 
@@ -154,16 +152,16 @@ public class RHVerify {
 
         String encoded = URLEncoder.encode(sb.toString(), "UTF-8");	//url encode
 
-        Log.d("SuperSYSDK", "The encoded getOrderID sign is "+encoded);
+        Log.d("RHSDK", "The encoded getOrderID sign is "+encoded);
 
         //这里用md5方式生成sign
         String sign = EncryptUtils.md5(encoded).toLowerCase();
 
         //如果签名方式是RSA，走下面方式
-        //String privateKey = SuperSYSDK.getInstance().getPayPrivateKey();
+        //String privateKey = RHSDK.getInstance().getPayPrivateKey();
         //String sign = RSAUtils.sign(encoded, privateKey, "UTF-8", "SHA1withRSA");
 
-        Log.d("SuperSYSDK", "The getOrderID sign is "+sign);
+        Log.d("RHSDK", "The getOrderID sign is "+sign);
 
         return sign;
 
@@ -182,7 +180,7 @@ public class RHVerify {
             int state = jsonObj.getInt("state");
 
             if(state != 1){
-                Log.d("SuperSYSDK", "auth failed. the state is "+ state);
+                Log.d("RHSDK", "auth failed. the state is "+ state);
                 return new RHToken();
             }
 
@@ -210,7 +208,7 @@ public class RHVerify {
             int state = jsonObj.getInt("state");
 
             if(state != 1){
-                Log.d("SuperSYSDK", "get order failed. the state is "+ state);
+                Log.d("RHSDK", "get order failed. the state is "+ state);
                 return null;
             }
 

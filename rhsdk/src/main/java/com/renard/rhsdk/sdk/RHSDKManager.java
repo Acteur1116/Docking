@@ -16,8 +16,8 @@ import com.renard.rhsdk.analytics.RHSubmit;
 import com.renard.rhsdk.insterface.ActivityCallback;
 import com.renard.rhsdk.insterface.RHSDKListener;
 import com.renard.rhsdk.log.Log;
-import com.renard.rhsdk.plugin.KSPay;
-import com.renard.rhsdk.plugin.KSUser;
+import com.renard.rhsdk.plugin.RHPay;
+import com.renard.rhsdk.plugin.RHUser;
 import com.renard.rhsdk.plugin.PluginFactory;
 import com.renard.rhsdk.user.RHSDKFlag;
 import com.renard.rhsdk.util.EncryptUtils;
@@ -397,8 +397,8 @@ public class RHSDKManager {
             }
 
 //            SSY185Push.getInstance().init();
-            KSUser.getInstance().init();
-            KSPay.getInstance().init();
+            RHUser.getInstance().init();
+            RHPay.getInstance().init();
 //            SSY185Share.getInstance().init();
 //            SSY185Analytics.getInstance().init();
 //            SSY185Download.getInstance().init();

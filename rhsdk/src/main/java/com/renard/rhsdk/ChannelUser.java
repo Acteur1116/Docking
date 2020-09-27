@@ -15,11 +15,11 @@ import com.renard.rhsdk.util.Arrays;
  *
  * @author suyanan
  */
-public class SSYUser extends UserAdapter implements UserPlugin {
+public class ChannelUser extends UserAdapter implements UserPlugin {
 
     public String[] supportedMethods = {"login","logout","submitExtraData"};
 
-    public SSYUser(Activity activity) {
+    public ChannelUser(Activity activity) {
         Log.e("111","111");
         RHSDKManager.getInstance().onResult(
                 RHSDKCode.CODE_INIT_SUCCESS, "init success");

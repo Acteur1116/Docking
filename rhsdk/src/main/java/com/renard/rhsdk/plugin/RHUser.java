@@ -12,16 +12,16 @@ import com.renard.rhsdk.user.UserExtraData;
  *
  * @author suyanan
  */
-public class KSUser {
-    public static KSUser instance;
+public class RHUser {
+    public static RHUser instance;
     private UserPlugin userPlugin;
 
-    public KSUser() {
+    public RHUser() {
     }
 
-    public static KSUser getInstance(){
+    public static RHUser getInstance(){
         if (instance==null){
-            instance=new KSUser();
+            instance=new RHUser();
         }
         return instance;
     }

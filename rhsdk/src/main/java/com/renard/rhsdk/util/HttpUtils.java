@@ -43,7 +43,7 @@ public class HttpUtils {
 
             String fullUrl = urlStr + "?" + paramsEncoded;
 
-            Log.d("SuperSYSDK", "the fullUrl is "+fullUrl);
+            Log.d("RHSDK", "the fullUrl is "+fullUrl);
 
             url = new URL(fullUrl);
             connection = (HttpURLConnection) url.openConnection();
@@ -59,7 +59,7 @@ public class HttpUtils {
                 }
                 result = strBuffer.toString();
             }else{
-                Log.e("SuperSYSDK", "get connection failed. code:"+connection.getResponseCode() + ";url:"+fullUrl);
+                Log.e("RHSDK", "get connection failed. code:"+connection.getResponseCode() + ";url:"+fullUrl);
             }
 
 
@@ -124,7 +124,7 @@ public class HttpUtils {
                 }
                 result = strBuffer.toString();
             }else{
-                Log.e("SuperSYSDK", "post connection failed. code:"+connection.getResponseCode() + ";url:"+urlStr);
+                Log.e("RHSDK", "post connection failed. code:"+connection.getResponseCode() + ";url:"+urlStr);
             }
 
 

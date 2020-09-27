@@ -10,9 +10,9 @@ import com.renard.rhsdk.plugin.PayPlugin;
  *
  * @author suyanan
  */
-public class SSYPay implements PayPlugin {
+public class ChannelPay implements PayPlugin {
 
-    public SSYPay(Activity activity) {
+    public ChannelPay(Activity activity) {
     }
 
     @Override
@@ -22,6 +22,6 @@ public class SSYPay implements PayPlugin {
 
     @Override
     public void pay(PayParams arg0) {
-//		SYSdk.getInstance().pay(arg0);
+    //调用支付
     }
 }

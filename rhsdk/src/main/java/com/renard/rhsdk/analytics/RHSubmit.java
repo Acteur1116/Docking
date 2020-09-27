@@ -114,7 +114,7 @@ public class RHSubmit {
             }
 
         }catch(Exception e){
-            android.util.Log.e("SuperSYSDK", "submit user info failed.\n"+e.getMessage());
+            android.util.Log.e("RHSDK", "submit user info failed.\n"+e.getMessage());
             e.printStackTrace();
         }
 

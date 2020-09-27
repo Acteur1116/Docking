@@ -7,8 +7,8 @@ import android.content.res.Configuration;
 import com.renard.rhsdk.insterface.RHSDKListener;
 import com.renard.rhsdk.log.Log;
 import com.renard.rhsdk.pay.PayParams;
-import com.renard.rhsdk.plugin.KSPay;
-import com.renard.rhsdk.plugin.KSUser;
+import com.renard.rhsdk.plugin.RHPay;
+import com.renard.rhsdk.plugin.RHUser;
 import com.renard.rhsdk.sdk.RHSDKExitListener;
 import com.renard.rhsdk.sdk.RHSDKInitListener;
 import com.renard.rhsdk.sdk.RHSDKManager;
@@ -179,7 +179,7 @@ public class RHSDK {
 
             @Override
             public void run() {
-                KSUser.getInstance().login();
+                RHUser.getInstance().login();
             }
         });
     }
@@ -191,8 +191,8 @@ public class RHSDK {
 
             @Override
             public void run() {
-                if(KSUser.getInstance().isSupport("logout"))
-                    KSUser.getInstance().logout();
+                if(RHUser.getInstance().isSupport("logout"))
+                    RHUser.getInstance().logout();
             }
         });
     }
@@ -205,8 +205,8 @@ public class RHSDK {
 
             @Override
             public void run() {
-                if(KSUser.getInstance().isSupport("showAccountCenter")){
-                    KSUser.getInstance().showAccountCenter();
+                if(RHUser.getInstance().isSupport("showAccountCenter")){
+                    RHUser.getInstance().showAccountCenter();
                 }
             }
         });
@@ -221,7 +221,7 @@ public class RHSDK {
 
             @Override
             public void run() {
-                KSUser.getInstance().submitExtraData(data);
+                RHUser.getInstance().submitExtraData(data);
             }
         });
     }
@@ -235,8 +235,8 @@ public class RHSDK {
 
             @Override
             public void run() {
-                if(KSUser.getInstance().isSupport("exit")){
-                    KSUser.getInstance().exit();
+                if(RHUser.getInstance().isSupport("exit")){
+                    RHUser.getInstance().exit();
                 }else{
                     if(callback != null){
                         callback.onGameExit();
@@ -256,7 +256,7 @@ public class RHSDK {
 
             @Override
             public void run() {
-                KSPay.getInstance().pay(data);
+                RHPay.getInstance().pay(data);
             }
         });
     }

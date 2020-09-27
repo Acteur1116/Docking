@@ -22,19 +22,19 @@ import com.renard.rhsdk.verify.RHVerify;
  *
  * @author suyanan
  */
-public class KSPay {
-    private static KSPay instance;
+public class RHPay {
+    private static RHPay instance;
 
     private PayPlugin payPlugin;
     private SWPlugin swPlugin;
 
-    private KSPay(){
+    private RHPay(){
 
     }
 
-    public static KSPay getInstance(){
+    public static RHPay getInstance(){
         if(instance == null){
-            instance = new KSPay();
+            instance = new RHPay();
         }
         return instance;
     }
@@ -87,22 +87,22 @@ public class KSPay {
             return;
         }
 
-        Log.d("SuperSYSDK", "****PayParams Print Begin****");
-        Log.d("SuperSYSDK", "productId="+data.getProductId());
-        Log.d("SuperSYSDK", "productName="+data.getProductName());
-        Log.d("SuperSYSDK", "productDesc="+data.getProductDesc());
-        Log.d("SuperSYSDK", "price="+data.getPrice());
-        Log.d("SuperSYSDK", "origPrice="+data.getOrigPrice());
-        Log.d("SuperSYSDK", "coinNum="+data.getCoinNum());
-        Log.d("SuperSYSDK", "serverId="+data.getServerId());
-        Log.d("SuperSYSDK", "serverName="+data.getServerName());
-        Log.d("SuperSYSDK", "roleId="+data.getRoleId());
-        Log.d("SuperSYSDK", "roleName="+data.getRoleName());
-        Log.d("SuperSYSDK", "roleLevel="+data.getRoleLevel());
-        Log.d("SuperSYSDK", "vip="+data.getVip());
-        //Log.d("SuperSYSDK", "orderID="+data.getOrderID());
-        Log.d("SuperSYSDK", "extension="+data.getExtension());
-        Log.d("SuperSYSDK", "****PayParams Print End****");
+        Log.d("RHSDK", "****PayParams Print Begin****");
+        Log.d("RHSDK", "productId="+data.getProductId());
+        Log.d("RHSDK", "productName="+data.getProductName());
+        Log.d("RHSDK", "productDesc="+data.getProductDesc());
+        Log.d("RHSDK", "price="+data.getPrice());
+        Log.d("RHSDK", "origPrice="+data.getOrigPrice());
+        Log.d("RHSDK", "coinNum="+data.getCoinNum());
+        Log.d("RHSDK", "serverId="+data.getServerId());
+        Log.d("RHSDK", "serverName="+data.getServerName());
+        Log.d("RHSDK", "roleId="+data.getRoleId());
+        Log.d("RHSDK", "roleName="+data.getRoleName());
+        Log.d("RHSDK", "roleLevel="+data.getRoleLevel());
+        Log.d("RHSDK", "vip="+data.getVip());
+        //Log.d("RHSDK", "orderID="+data.getOrderID());
+        Log.d("RHSDK", "extension="+data.getExtension());
+        Log.d("RHSDK", "****PayParams Print End****");
 
         if(RHSDKManager.getInstance().isGetOrder()){
 
@@ -142,7 +142,7 @@ public class KSPay {
 
         @Override
         protected RHOrder doInBackground(Void... args) {
-            Log.d("SuperSYSDK", "begin to get order id from ssysdkserver...");
+            Log.d("RHSDK", "begin to get order id from ssysdkserver...");
             RHOrder result = RHVerify.getOrder(data);
 
             return result;
@@ -153,7 +153,7 @@ public class KSPay {
             RHSDKTools.hideProgressTip(processTip);
 
             if(order == null){
-                Log.e("SuperSYSDK", "get order from ssysdkserver failed.");
+                Log.e("RHSDK", "get order from ssysdkserver failed.");
                 Toast.makeText(RHSDKManager.getInstance().getContext(), "获取订单号失败", Toast.LENGTH_SHORT).show();
                 return;
             }
